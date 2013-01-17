@@ -203,7 +203,8 @@ put it in mag-menu-key-maps for fast lookup."
       (mag-menu-kill-buffer))))
 
 (defun mag-menu-add-argument (group arg-name input-func)
-  (let ((input (funcall input-func (concat arg-name ": "))))
+  (let* ((old (gethash arg-name mag-menu-current-args))
+         (input (funcall input-func (concat arg-name ": ") old)))
     (if (= (length input) 0)
         (remhash arg-name mag-menu-current-args)
         (puthash arg-name input mag-menu-current-args))
